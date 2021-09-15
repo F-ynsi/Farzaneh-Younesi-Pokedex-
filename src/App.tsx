@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, MouseEventHandler, useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from 'axios'
+import './App.css'
+import { PokeList, DetailView } from './components'
+import { Pokemon } from './types/pokemonSchemas'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export interface AppState {
+  pokemon: Pokemon | undefined;
 }
 
-export default App;
+class App extends Component<any, AppState> {
+    state = {
+      pokemon: {
+        id: 1,
+        name: "bulbasaur",
+        abilities: [],
+      }
+    }
+
+    handleClick = (name: string) => {
+      axios
+          .get<Pokemon>(`https://pokeapi.co/api/v2/pokemon/${name}`, {
+            headers: {
+              "Content-Type": "application/json"
+            },
+          }).then(response => {
+            const pokemon = response.data
+            this.setState({pokemon});
+          }).catch(ex => {
+            const error =
+            ex !== undefined
+              ? "Resource Not found"
+              : "An unexpected error has occurred";
+          })
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {console.log(this.state.pokemon)}
+        <PokeList handleOnClick={this.handleClick} />
+        <DetailView pokemon={this.state.pokemon}/>
+      </div>
+    );
+  }
+}
+
+export default App
