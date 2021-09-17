@@ -7,6 +7,8 @@ body{
     background-color: #4B778D;
     background-size: cover;
     margin: 0;
+    font-family: 'Wallpoet', cursive;
+
 }
 
 h1 {
@@ -16,11 +18,15 @@ h1 {
 .spotlight-pok{
     background-color: #8FD9A8;
     border-radius: 0 10px 10px 0;
+    font-size: 85%;
+    
+    
 }
 
 .all-pok{
     background-color: #8FD9A8;
     border-radius: 10px 0 0 10px;
+    font-size: 85%;
 }
 
 .pokedex-window{
