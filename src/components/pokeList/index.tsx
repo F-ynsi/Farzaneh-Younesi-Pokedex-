@@ -1,7 +1,6 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react'
+import React from 'react'
 import axios from 'axios';
 import PokeCell from '../pokeCell'
-import './pokeList.css'
 import { PokemonsData, RawPokemon } from '../../types/pokemonSchemas'
 
 const PokeList = ({handleOnClick}:{handleOnClick: (name: string)=> void}) => {
@@ -11,11 +10,11 @@ const PokeList = ({handleOnClick}:{handleOnClick: (name: string)=> void}) => {
     previous: "string",
     results: []
   }
-  const [pokemosData, setPokemonsData]: [PokemonsData, (posts: PokemonsData) => void] = useState(defaultPokemosData)
+  const [pokemosData, setPokemonsData]: [PokemonsData, (posts: PokemonsData) => void] = React.useState(defaultPokemosData)
   const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(true)
   const [error, setError]: [string, (error: string) => void] = React.useState("")
 
-  useEffect(() => {
+  React.useEffect(() => {
     axios
         .get<PokemonsData>("https://pokeapi.co/api/v2/pokemon/?limit=100", {
           headers: {
@@ -31,14 +30,17 @@ const PokeList = ({handleOnClick}:{handleOnClick: (name: string)=> void}) => {
             : "An unexpected error has occurred"
           setError(error)
           setLoading(false)
-        });
+        })
     }, [])
     
   return (
-    <section className="poke-list">
-      {pokemosData.results.map((rawPokemon: RawPokemon) => {return (<PokeCell data={rawPokemon} handleOnClick={handleOnClick} />)})}
-    </section>
-)
+    <div className="d-flex flex-wrap justify-content-between ">
+      {pokemosData.results.map(
+        (rawPokemon: RawPokemon) => 
+          <PokeCell data={rawPokemon} handleOnClick={handleOnClick} />
+      )}
+    </div>
+  )
 }
 
 export default PokeList

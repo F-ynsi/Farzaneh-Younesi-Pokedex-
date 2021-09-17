@@ -1,18 +1,11 @@
 .poke-cell {
-    width: 120px;
-    height: 120px;
-    margin: 10px;
-    background-color: rgb(185, 45, 45);
-    background-repeat: no-repeat;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+    background-color: #D2E69C;
+    cursor: pointer;  
+    
 }
 
-
-
-
-
-
-
-
+.poke-cell:hover{
+    background-color: transparent;
+    transform: scale(1.1);
+    box-shadow: 5px;
+}
